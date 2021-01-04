@@ -25,13 +25,32 @@ public class FieldPainel extends JFrame {
  int coluna = 0;
  int minas = 0; 
  int opcaoDificuldade = 0;
+
  
 
   public void createPainel() {
-   
-    opcaoDificuldade = Integer.parseInt(JOptionPane.showInputDialog("Insira a dificuldade (1) Easy (10X15),    (2) Normal (20X20),    (3) Difícil (30X30)"));
+   int i = 0;
+   boolean ok = true;
+    do{
+       try{ ok = true;
+            String opc =JOptionPane.showInputDialog("Insira a dificuldade (1) Easy (10X15),    (2) Normal (20X20),    (3) Difícil (30X30)");
+            opcaoDificuldade = Integer.parseInt(opc);
+            System.out.println(opc);
+            if (opc == null){
+                  System.out.println("Cancelado");
+            }else{
+                TipoDificuldade tipoDificuldade = TipoDificuldade.values()[opcaoDificuldade -1];//Verifica se tem a opção de dificuldade
+                JOptionPane.showMessageDialog(null, "Dificuldade " +tipoDificuldade + ". OK para Iniciar Jogo");
+            }
+       }
+       catch(Exception e){
+           JOptionPane.showMessageDialog(null," Tente Novamente uma das opções", "Erro", JOptionPane.ERROR_MESSAGE);
+            ok = false;      
+       }
+    }while (!ok);
+       
     TipoDificuldade tipoDificuldade = TipoDificuldade.values()[opcaoDificuldade -1];
-   
+       
     StrategyDificuldadeGame dificuldade = tipoDificuldade.obterDificuldade();
       
     int l = dificuldade.linha(linha);
